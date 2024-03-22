@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using ApiDuelMonster.Data
 @using System.Text.Json
+@inject CardApi api
 
 <PageTitle>Home</PageTitle>
 
@@ -21,7 +22,7 @@
 
 @code
 {
-	CardApi api = new CardApi();
+	
 
 
 	private void GetCarte()

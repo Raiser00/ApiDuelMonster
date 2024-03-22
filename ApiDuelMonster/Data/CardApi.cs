@@ -5,7 +5,7 @@ namespace ApiDuelMonster.Data
 	public class CardApi
 	{
 		public Card CurrentCarte { get; set; }
-		public List<Card> ListCarte { get; set; }
+		public List<Card> Favorites { get; set; } = new List<Card>();
 
 		public async Task GetCarte()
 		{

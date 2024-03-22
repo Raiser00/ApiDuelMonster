@@ -1,0 +1,20 @@
+﻿@page "/Favorites"
+@using ApiDuelMonster.Data
+@inject CardApi api
+
+<h3>Favorites</h3>
+
+@if (api.Favorites.Count() > 0)
+{
+	<p>il y des favs</p>
+}
+else
+{
+	<p>No favorites yet !</p>
+}
+
+
+
+@code {
+
+}
