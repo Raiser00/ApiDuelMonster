@@ -44,5 +44,15 @@ namespace ApiDuelMonster.Data
 				Console.WriteLine(ex.Message);
 			}
 		}
+
+		public bool AddFavs()
+		{
+			if(!Favorites.Any(card => card.Id == CurrentCarte.Id))
+			{
+				Favorites.Add(CurrentCarte);
+				return true;
+			}
+			return false;
+		}
 	}
 }

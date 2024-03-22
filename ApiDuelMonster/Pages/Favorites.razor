@@ -6,7 +6,18 @@
 
 @if (api.Favorites.Count() > 0)
 {
-	<p>il y des favs</p>
+	@foreach(var card in api.Favorites)
+	{
+		<div>
+			<p>ID : @card.Id</p>
+			<p>Name : @card.Name</p>
+			<p>Race : @card.Race</p>
+			<p>Type : @card.Type</p>
+			<p>Description : @card.Desc</p>
+			<p><img src="@card.Image" alt="Carte" /></p>
+
+		</div>
+	}
 }
 else
 {

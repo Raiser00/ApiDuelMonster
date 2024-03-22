@@ -18,18 +18,38 @@
 
 }
 
+<p>
+	<button @onclick="GetCarte">Check</button>
+	<button @onclick="AddFavs">Add Card</button>
+</p>
 
-<button @onclick="GetCarte">Check</button>
+<p>
+	@AddingSuccess
+</p>
+
+
 
 
 @code
 {
-	
+	private string AddingSuccess;
 
-
-	private void GetCarte()
+	private void AddFavs()
 	{
-		api.GetCarte();
+		if(api.AddFavs())
+		{
+			AddingSuccess = "Card added to Favorites !";
+		}
+		else
+		{
+			AddingSuccess = "Error with adding ! Card already in the Favorites";
+		}
+	}
+
+	private async Task GetCarte()
+	{
+		await api.GetCarte();
+		
 	}
 
 
