@@ -54,5 +54,23 @@ namespace ApiDuelMonster.Data
 			}
 			return false;
 		}
+
+		public void AddQuantity(Card card)
+		{
+			card.Quantity++;
+		}
+
+		public void DelQuantity(Card card)
+		{
+			if (card.Quantity > 0)
+			{
+				card.Quantity--;
+			}
+		}
+
+		public void RemoveFavs(Card card)
+		{
+			Favorites.Remove(card);
+		}
 	}
 }

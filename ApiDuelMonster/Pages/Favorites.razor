@@ -13,9 +13,15 @@
 			<p>Name : @card.Name</p>
 			<p>Race : @card.Race</p>
 			<p>Type : @card.Type</p>
+			<p>Quantity : @card.Quantity</p>
 			<p>Description : @card.Desc</p>
 			<p><img src="@card.Image" alt="Carte" /></p>
 
+			<p>
+				<button @onclick="() => AddQuantity(card)">Add Quantity</button>
+				<button @onclick="() => DelQuantity(card)">Delete Quantity</button>
+				<button @onclick="() => RemoveFavs(card)">Remove Favorites</button>
+			</p>
 		</div>
 	}
 }
@@ -27,5 +33,18 @@ else
 
 
 @code {
+	private void AddQuantity(Card card)
+	{
+		api.AddQuantity(card);
+	}
 
+	private void DelQuantity(Card card)
+	{
+		api.DelQuantity(card);
+	}
+
+	private void RemoveFavs(Card card)
+	{
+		api.RemoveFavs(card);
+	}
 }
