@@ -1,6 +1,8 @@
 ﻿@page "/Favorites"
 @using ApiDuelMonster.Data
+@using System.Text.Json
 @inject CardApi api
+@inject IJSRuntime JSR
 
 <h3>Favorites</h3>
 
@@ -33,18 +35,27 @@ else
 
 
 @code {
-	private void AddQuantity(Card card)
+	private async Task AddQuantity(Card card)
 	{
 		api.AddQuantity(card);
+		await SaveFavorites();
 	}
 
-	private void DelQuantity(Card card)
+	private async Task DelQuantity(Card card)
 	{
 		api.DelQuantity(card);
+		await SaveFavorites();
 	}
 
-	private void RemoveFavs(Card card)
+	private async Task RemoveFavs(Card card)
 	{
 		api.RemoveFavs(card);
+		await SaveFavorites();
+	}
+
+	private async Task SaveFavorites()
+	{
+		var json = JsonSerializer.Serialize(api.Favorites);
+		await JSR.InvokeVoidAsync("localStorage.setItem", "FavsCards", json);
 	}
 }

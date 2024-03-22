@@ -2,6 +2,8 @@
 @using ApiDuelMonster.Data
 @using System.Text.Json
 @inject CardApi api
+@inject IJSRuntime JSR
+
 
 <PageTitle>Home</PageTitle>
 
@@ -34,11 +36,29 @@
 {
 	private string AddingSuccess;
 
-	private void AddFavs()
+	private bool _isFirstRender = true;
+
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		if (firstRender && _isFirstRender)
+		{
+			if (api.Favorites.Count() == 0)
+			{
+				await LoadFavorites();
+			}
+			_isFirstRender = false; // Prevent future invocations on re-renders
+		}
+
+		await base.OnAfterRenderAsync(firstRender);
+	}
+
+	private async Task AddFavs()
 	{
 		if(api.AddFavs())
 		{
 			AddingSuccess = "Card added to Favorites !";
+			await SaveFavorites();
 		}
 		else
 		{
@@ -49,8 +69,27 @@
 	private async Task GetCarte()
 	{
 		await api.GetCarte();
-		
+
 	}
+
+	private async Task SaveFavorites()
+	{
+		var json = JsonSerializer.Serialize(api.Favorites);
+		await JSR.InvokeVoidAsync("localStorage.setItem", "FavsCards", json);
+	}
+
+	private async Task LoadFavorites()
+	{
+		var value = await JSR.InvokeAsync<string>("localStorage.getItem", "FavsCards");
+
+		if(value != null)
+		{
+			List<Card> saving = JsonSerializer.Deserialize<List<Card>>(value);
+			api.Favorites = saving;
+		}
+
+	}
+
 
 
 	
