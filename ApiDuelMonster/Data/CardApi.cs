@@ -23,17 +23,16 @@ namespace ApiDuelMonster.Data
 				};
 
 				CardInfo info = JsonSerializer.Deserialize<CardInfo>(root, options);
+				List<CardImg> images = JsonSerializer.Deserialize<List<CardImg>>(root.GetProperty("card_images"));
 				var carte = new Card
 				{
 					Id = info.Id,
 					Name = info.Name,
-					Desc = info.Desc
+					Desc = info.Desc,
+					Race = info.Race,
+					Type = info.Type,
+					Image = images[0].ImgUrlSmall
 				};
-
-
-				List<CardImg> images = JsonSerializer.Deserialize<List<CardImg>>(root.GetProperty("card_images"));
-
-				carte.Image = images[0].ImgUrlSmall;
 
 				if(carte != null)
 				{
